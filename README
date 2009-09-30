@@ -1,0 +1,35 @@
+
+  Using the Shellduino Skeleton
+  =============================
+
+  Getting Shellduino:
+  -------------------
+
+  1. Get shellduino-skel
+     $ git clone git://github.com/frickel/shellduino-skel.git
+
+  2.  Copy skeleton to your project directory (e.g. hello)
+     $ cp -r shellduino-skel /home/fnord/projects/hello
+
+  3. Change your local work directory to your project directory
+     $ cd /home/fnord/projects/hello
+
+  4. Change some settings in 'Makefile'
+     TARGET = hello
+
+     Sometimes you've got to change the MCU-Type (e.g. m168, m328p,..).
+     (See *duino guide).
+
+
+  Building:
+  ---------
+
+  1. Change your local work directory to your project directory
+     $ cd /home/fnord/projects/hello
+
+  2. To compile your project, type: 
+     $ make 
+
+  3. Writing the .hex flash-image to the *duino:
+     $ make flash
+
