@@ -1,6 +1,6 @@
 # Your target ($TARGET without .pde extension)
 # Default: helloworld 
-TARGET = helloworld
+TARGET = testapp
 
 # CPU and Clock-frequency settings
 # Default: atmega328p with 16MHz (16000000L)
