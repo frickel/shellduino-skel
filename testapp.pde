@@ -1,5 +1,5 @@
 #define BAUD		115200	
-#define DELAY		1000
+#define DELAY		5000
 #define RST		2
 
 #define INIT_SEQ	0x55
@@ -12,6 +12,7 @@
 #define CMD_PUTPIXEL	0x50
 #define CMD_READPIXEL	0x52
 #define CMD_RECTANGLE	0x72
+#define CMD_TRIANGLE	0x47
 #define CMD_PAINTAREA	0x70
 #define CMD_SETFNTSIZE	0x46
 #define FONT_5X7	0x01
@@ -58,6 +59,41 @@ void displayClear()
 	getDisplayResponse();
 }
 
+void displaySetBgColor(int color)
+{
+	Serial.print(CMD_BGCOLOR, BYTE);
+	Serial.print(color >> 8, BYTE);		// MSB
+	Serial.print(color & 0xFF, BYTE);	// LSB
+}
+
+displaySetFontSize(int size)
+{
+	Serial.print(CMD_SETFNTSIZE, BYTE);
+	Serial.print(size, BYTE);
+}
+
+displayDrawCircle(int x, int y, int rad, int color)
+{
+	Serial.print(CMD_CIRCLE, BYTE);
+	Serial.print(x, BYTE);
+	Serial.print(y, BYTE);
+	Serial.print(rad, BYTE);
+	Serial.print(color >> 8, BYTE);		// MSB
+	Serial.print(color & 0xFF, BYTE);	// LSB
+}
+
+displayDrawTriangle(int x1, int y1, int x2, int y2, int color)
+{
+	Serial.print(CMD_TRIANGLE, BYTE);
+	Serial.print(x1, BYTE);
+	Serial.print(y1, BYTE);
+	Serial.print(x2, BYTE);
+	Serial.print(y2, BYTE);
+	Serial.print(color >> 8, BYTE);		// MSB
+	Serial.print(color & 0xFF, BYTE);	// LSB
+}
+}
+
 void displayDrawChar(char col, char row, char size, char myChar, int color)
 {
 	Serial.print(CMD_FMTTEXT, BYTE);
@@ -69,6 +105,12 @@ void displayDrawChar(char col, char row, char size, char myChar, int color)
 	getDisplayResponse();
 }
 
+void printByte(byte b)
+{
+        Serial.print(b, BYTE);
+}
+
+
 void setup()
 {
         Serial.begin(BAUD);     // The OLED-Display is connected via UART
@@ -78,6 +120,20 @@ void setup()
         displayInit();
         displayClear();
         displayDrawChar(1, 1, 10, '4', 52333);
+	displayDrawChar(2, 1, 10, '2', 52333);
+
+	delay(2000);
+printByte(0x40); //extcmd in hex
+printByte(0x49); //cmd in hex
+printByte(0); //x
+printByte(0); //y
+printByte(128); //width 128
+printByte(128); //height 128
+printByte(16); //colour mode 16
+//sector address of photo
+printByte(0); //0
+printByte(16); //16
+printByte(0); //0
 }
 
 void loop()
