@@ -130,7 +130,7 @@ applet/core.a: $(OBJ)
 
 flash:
 	@echo "Resetting *duino target."
-	@perl tools/dtr_on.pl
+	@perl tools/dtr_on.pl "$(AVRDUDE_PORT)"
 	@echo "Spawning avrdude."
 	@$(AVRDUDE) -p $(AVRDUDE_PART) -c $(AVRDUDE_PROG) -U flash:w:applet/$(TARGET).hex -P $(AVRDUDE_PORT) -b $(AVRDUDE_BAUD)
 	@echo "All done. Have fun with your *duino."
